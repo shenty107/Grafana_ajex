@@ -1,34 +1,63 @@
-<!DOCTYPE html>
-<html>
-<body>
+<p id="status">wating</p>
 
-<h1>Fusing×´Ì¬¼àÊÓ</h1>
+<button id="ajaxButton" type="button">Check Status</button>
 
-<p id="status"></p>
+<button id="ajaxButton2" type="button">Change</button>
 
-<button type="button" onclick="loadDoc()">Fusing On/Off</button>
-
-<p id="demo"></p>
- 
 <script>
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-      document.getElementById("demo").innerHTML = this.responseText;
-  };
-  xhttp.open("GET", "http://10.10.31.166:8080/dds/api/changefusing", true);
-  xhttp.send();
-}
+    (function() {
+        var httpRequest;
+        document.getElementById("ajaxButton").addEventListener('click', makeRequest);
 
-window.addEventListener("load", function(event) {
-    var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-      document.getElementById("status").innerHTML = this.responseText;
-  };
-  xhttp.open("GET", "http://10.10.31.166:8080/dds/api/isfusing", true);
-  xhttp.send();
-  });
+        function makeRequest() {
+            httpRequest = new XMLHttpRequest();
+
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+                return false;
+            }
+            httpRequest.onreadystatechange = alertContents;
+            httpRequest.open('GET', 'http://10.10.31.166:8080/dds/api/isfusing',true);
+            httpRequest.send();
+        }
+
+        function alertContents() {
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                if (httpRequest.status === 200) {
+                    document.getElementById("status").innerHTML = httpRequest.responseText;
+                    //alert(httpRequest.responseText);
+                } else {
+                    alert('There was a problem with the request.');
+                }
+            }
+        }
+    })();
+
+    (function() {
+        var httpRequest;
+        document.getElementById("ajaxButton2").addEventListener('click', makeRequest);
+
+        function makeRequest() {
+            httpRequest = new XMLHttpRequest();
+
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+                return false;
+            }
+            httpRequest.onreadystatechange = alertContents;
+            httpRequest.open('GET', 'http://10.10.31.166:8080/dds/api/changefusing',true);
+            httpRequest.send();
+        }
+
+        function alertContents() {
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                if (httpRequest.status === 200) {
+                    document.getElementById("status").innerHTML = httpRequest.responseText;
+                    //alert(httpRequest.responseText);
+                } else {
+                    alert('There was a problem with the request.');
+                }
+            }
+        }
+    })();
 </script>
-
-</body>
-</html>
