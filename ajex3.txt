@@ -2,7 +2,9 @@
 <html>
 <body>
 
-<h1>The XMLHttpRequest Object</h1>
+<h1>Fusing×´Ì¬¼àÊÓ</h1>
+
+<p id="status"></p>
 
 <button type="button" onclick="loadDoc()">Fusing On/Off</button>
 
@@ -12,13 +14,20 @@
 function loadDoc() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
       document.getElementById("demo").innerHTML = this.responseText;
-    }
+  };
+  xhttp.open("GET", "http://10.10.31.166:8080/dds/api/changefusing", true);
+  xhttp.send();
+}
+
+window.addEventListener("load", function(event) {
+    var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById("status").innerHTML = this.responseText;
   };
   xhttp.open("GET", "http://10.10.31.166:8080/dds/api/isfusing", true);
   xhttp.send();
-}
+  });
 </script>
 
 </body>
