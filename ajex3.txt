@@ -53,9 +53,10 @@
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
                 if (httpRequest.status === 200) {
                     document.getElementById("status").innerHTML = httpRequest.responseText;
+                    alert('已切换熔断开关状态');
                     //alert(httpRequest.responseText);
                 } else {
-                    alert('There was a problem with the request.');
+                    alert('已切换熔断开关状态');
                 }
             }
         }
